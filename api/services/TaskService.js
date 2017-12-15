@@ -60,6 +60,23 @@ module.exports = {
             return [err];
         });
         return addedTag;
+    },
+
+    searchBySubStringOfNameOrQuery: function (query) {
+        var tasks = Task.find([{ name: { 'like': '%' + query + '%' }}, { tags: { 'like': '%' + query + '%' }}]).then(function(data){
+            return [null, data]
+        }).catch(function(error){
+            return [error];
+        })
+        return tasks;
+        //  var taskQuery = 'SELECT id, name, tags FROM tasks WHERE name like "%' + query + '%" OR tags LIKE "%' + query + '%"'; 
+        // var TaskQueryAsync = promise.promisify(Task.query);
+        // var tasks = TaskQueryAsync(taskQuery).then(function(tasks){
+        //     return [null, tasks];
+        // }).catch(function(err){
+        //     return [err];
+        // })
+        // return tasks;
     }
 };
 

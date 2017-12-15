@@ -61,6 +61,11 @@ module.exports.routes = {
     action : 'tag'
   },
 
+  'POST /search': {
+    controller: 'Task',
+    action : 'search'
+  },
+
 
   /***************************************************************************
   *                                                                          *

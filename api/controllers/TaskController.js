@@ -37,5 +37,16 @@ module.exports = {
         })
         
     },
+
+    search: function(req, res){
+        let query = req.query.query;
+        TaskService.searchBySubStringOfNameOrQuery(query).spread(function(error, resp){
+            if(error)
+                return res.badRequest(error);
+            return res.ok(resp);
+        }).catch(function(error){
+            return res.serverError(error);
+        })
+    }
 };
 
