@@ -6,6 +6,7 @@
  */
 
 var jwt = require('jsonwebtoken');
+var promise = require('bluebird');
 var tokenSecret = "babafemisecret";
 
 module.exports = {
@@ -15,7 +16,10 @@ module.exports = {
         })
     },
 
-    verify : function(token){
-        return jwt.verify(token, tokenSecret);
+    verify: function (token, cb) {
+        return jwt.verify(token, tokenSecret, {}, cb);
+    },
+    getExpiry: function (token) {
+        return jwt.verify(token, tokenSecret).exp;
     }
 }

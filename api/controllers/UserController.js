@@ -27,11 +27,16 @@ module.exports = {
                 return res.badRequest(info);
             }
             var token = JwtService.issue({id : user.id});
-            var tokenObj = JwtService.verify(token);
-            var response = {"access_token" : token, "expires_in" : tokenObj.exp, "scope" : "jwt", "token_type" : "bearer"};
+            var expiry = JwtService.getExpiry(token);
+            var response = {"access_token" : token, "expires_in" : expiry, "scope" : "jwt", "token_type" : "bearer"};
             return res.ok(response);
             
         })(req, res);
+    },
+
+    test : function(req, res){
+        //why is passport authentication local...?
+        return res.ok("Successful");
     }
     
 };
