@@ -40,6 +40,8 @@ module.exports = {
 
     search: function(req, res){
         let query = req.query.query;
+        let days = req.query.days;
+        if(query){
         TaskService.searchBySubStringOfNameOrQuery(query).spread(function(error, resp){
             if(error)
                 return res.badRequest(error);
@@ -47,11 +49,9 @@ module.exports = {
         }).catch(function(error){
             return res.serverError(error);
         })
-    },
-
-    searchForTaskInXDaysTime: function(req, res){
-        let query = req.query.days;
-        TaskService.searchForTaskInXDaysTime(query).spread(function(error, resp){
+    }
+    if(days){
+        TaskService.searchForTaskInXDaysTime(days).spread(function(error, resp){
             if(error)
                 return res.badRequest(error);
             return res.ok(resp);
@@ -60,5 +60,6 @@ module.exports = {
         })
     }
     
+    },    
 };
 
