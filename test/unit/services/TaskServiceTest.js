@@ -10,10 +10,11 @@ describe('The Task Service', function () {
             then(function (data) {
                 return [TaskService.create({
                     "id": 1, "name": "Create an api", "description": "Make it work", "user": 1,
-                    "dueDate": "2017-12-12", "tags": "Work,fine"
+                    "dueDate": TaskService.addDays(new Date(), 2), "tags": "Work,fine"
                 })]
             }).
-            spread(function (data) {
+            spread(function (resp) {
+                console.log("Due date : " + resp[1].dueDate);
                 done();
             })
     });
@@ -98,6 +99,22 @@ describe('The Task Service', function () {
                 task.should.have.length(2);
                 task[1].should.be.an('array');
                 task[1][0].should.have.property('tags');
+                task[1][0].tags.should.equal("Work,fine,Yh,No");
+
+                done();
+            })
+            .catch(done);
+
+    });
+
+    it('should return all tasks whose due date is in 2 days.', function (done) {
+        TaskService
+            .searchForTaskInXDaysTime(2)
+            .then(function (task) {
+                task.should.be.an('array');
+                task.should.have.length(2);
+                task[1].should.be.an('array');
+                task[1][0].should.be.an('object');
                 task[1][0].tags.should.equal("Work,fine,Yh,No");
 
                 done();

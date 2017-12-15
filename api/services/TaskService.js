@@ -77,6 +77,24 @@ module.exports = {
         //     return [err];
         // })
         // return tasks;
+    },
+
+    addDays: function(date, days) {
+        var result = date;
+        result.setDate(result.getDate() + Number(days));
+        return result;
+      },
+
+    searchForTaskInXDaysTime: function (x) {
+        var minDate = TaskService.addDays(new Date(), x-1);
+        var maxDate = TaskService.addDays(new Date(), x + 1);
+        var tasks = Task.find({ dueDate: { '>': minDate, '<': maxDate } })
+        .then(function(data){
+            return [null, data]
+        }).catch(function(error){
+            return [error];
+        })
+        return tasks;
     }
 };
 

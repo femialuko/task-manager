@@ -66,6 +66,12 @@ module.exports.routes = {
     action : 'search'
   },
 
+  'POST /search': {
+    controller: 'Task',
+    action : 'searchForTaskInXDaysTime'
+  },
+
+  
 
   /***************************************************************************
   *                                                                          *

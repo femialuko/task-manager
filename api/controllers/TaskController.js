@@ -47,6 +47,18 @@ module.exports = {
         }).catch(function(error){
             return res.serverError(error);
         })
+    },
+
+    searchForTaskInXDaysTime: function(req, res){
+        let query = req.query.days;
+        TaskService.searchForTaskInXDaysTime(query).spread(function(error, resp){
+            if(error)
+                return res.badRequest(error);
+            return res.ok(resp);
+        }).catch(function(error){
+            return res.serverError(error);
+        })
     }
+    
 };
 
