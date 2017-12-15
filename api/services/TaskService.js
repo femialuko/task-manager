@@ -62,9 +62,22 @@ module.exports = {
         return addedTag;
     },
 
+    indicateStatusOfTask : function(results){
+        _.forEach(results, function(result){
+            if(result.dueDate > new Date())
+                result.isDue = false;
+            else{
+                result.isDue = true;
+            }
+            
+        })
+        return results;
+    },
+
     searchBySubStringOfNameOrQuery: function (query) {
-        var tasks = Task.find([{ name: { 'like': '%' + query + '%' }}, { tags: { 'like': '%' + query + '%' }}]).then(function(data){
-            return [null, data]
+        var tasks = Task.find([{ name: { 'like': '%' + query + '%' }}, { tags: { 'like': '%' + query + '%' }}]).then(function(results){
+            results = TaskService.indicateStatusOfTask(results);
+            return [null, results]
         }).catch(function(error){
             return [error];
         })
@@ -90,6 +103,7 @@ module.exports = {
         var maxDate = TaskService.addDays(new Date(), x + 1);
         var tasks = Task.find({ dueDate: { '>': minDate, '<': maxDate } })
         .then(function(data){
+            data = TaskService.indicateStatusOfTask(data);
             return [null, data]
         }).catch(function(error){
             return [error];
