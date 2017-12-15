@@ -27,7 +27,6 @@ describe('The Jwt Service', function () {
     it('should return the user details upon verification', function (done) {
         var token = JwtService.issue({ "id": 1, "email": "golden@gmail.com" })
         var userDetails = JwtService.verify(token);
-        console.log(userDetails);
         userDetails.should.be.a('object');
         userDetails.should.have.property('email');
         userDetails.should.have.property('id');

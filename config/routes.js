@@ -49,7 +49,17 @@ module.exports.routes = {
   'GET /test': {
     controller: 'User',
     action : 'test'
-  }
+  },
+
+  'POST /task': {
+    controller: 'Task',
+    action : 'create'
+  },
+
+  'POST /tag': {
+    controller: 'Task',
+    action : 'tag'
+  },
 
 
   /***************************************************************************
