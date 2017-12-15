@@ -34,7 +34,18 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
+  },
+
+  'POST /user': {
+    controller: 'User',
+    action : 'create'
+  },
+
+  'POST /login': {
+    controller: 'User',
+    action : 'authenticate'
   }
+
 
   /***************************************************************************
   *                                                                          *
