@@ -32,6 +32,7 @@ module.exports = {
       required: true
     }
   },
+
   validationMessages: { //hand for i18n & l10n
     name: {
       required: 'Name is required'
