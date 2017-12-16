@@ -11,6 +11,10 @@ module.exports = {
     create: function (req, res) {
         let allowedParams = ["name", "description", "dueDate", "tags", "user"];
         let data = _.pick(req.body, allowedParams);
+        if(!data.user){
+            return res.badRequest({ "message": "Please enter the user id" });
+        }
+        
         TaskService.create(data).spread(function(error, resp){
             if(error){
                 return res.badRequest(error);

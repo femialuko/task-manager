@@ -23,6 +23,8 @@ module.exports = {
                 return [err];
             return [null, resp];
         }).catch(function (err) {
+            if (err.Errors)
+                return [ValidationMessageService.format(err.Errors)];
             return [err];
         })
         return createdTask;
@@ -62,23 +64,23 @@ module.exports = {
         return addedTag;
     },
 
-    indicateStatusOfTask : function(results){
-        _.forEach(results, function(result){
-            if(result.dueDate > new Date())
+    indicateStatusOfTask: function (results) {
+        _.forEach(results, function (result) {
+            if (result.dueDate > new Date())
                 result.isDue = false;
-            else{
+            else {
                 result.isDue = true;
             }
-            
+
         })
         return results;
     },
 
     searchBySubStringOfNameOrQuery: function (query) {
-        var tasks = Task.find([{ name: { 'like': '%' + query + '%' }}, { tags: { 'like': '%' + query + '%' }}]).then(function(results){
+        var tasks = Task.find([{ name: { 'like': '%' + query + '%' } }, { tags: { 'like': '%' + query + '%' } }]).then(function (results) {
             results = TaskService.indicateStatusOfTask(results);
             return [null, results]
-        }).catch(function(error){
+        }).catch(function (error) {
             return [error];
         })
         return tasks;
@@ -92,22 +94,22 @@ module.exports = {
         // return tasks;
     },
 
-    addDays: function(date, days) {
+    addDays: function (date, days) {
         var result = date;
         result.setDate(result.getDate() + Number(days));
         return result;
-      },
+    },
 
     searchForTaskInXDaysTime: function (x) {
-        var minDate = TaskService.addDays(new Date(), x-1);
+        var minDate = TaskService.addDays(new Date(), x - 1);
         var maxDate = TaskService.addDays(new Date(), x + 1);
         var tasks = Task.find({ dueDate: { '>': minDate, '<': maxDate } })
-        .then(function(data){
-            data = TaskService.indicateStatusOfTask(data);
-            return [null, data]
-        }).catch(function(error){
-            return [error];
-        })
+            .then(function (data) {
+                data = TaskService.indicateStatusOfTask(data);
+                return [null, data]
+            }).catch(function (error) {
+                return [error];
+            })
         return tasks;
     }
 };

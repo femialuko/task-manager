@@ -19,6 +19,8 @@ module.exports = {
             }
             return [null, response];
         }).catch(function (err) {
+            if(err.Errors)
+                return [ValidationMessageService.format(err.Errors)];
             return [err];
         })
         return createdUser;

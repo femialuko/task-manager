@@ -31,5 +31,14 @@ module.exports = {
         values.password = hash;
         cb();
       })
-  }
+  },
+
+  validationMessages: { //hand for i18n & l10n
+    email: {
+        required: 'Email is required'
+    },
+    password: {
+        required: 'password is required'
+    }
+}
 };

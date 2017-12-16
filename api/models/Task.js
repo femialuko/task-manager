@@ -6,35 +6,45 @@
  */
 module.exports = {
 
-  tableName : "tasks",
+  tableName: "tasks",
   attributes: {
-    id : {
-      type : "integer",
-      primaryKey : true,
-      autoIncrement : true
-    },
-    name : {
-      type : "string",
-      required : true
+    name: {
+      type: "string",
+      required: true
     },
 
-    description : {
-      type : "string"
+    description: {
+      type: "string"
     },
 
-    dueDate : {
-      type : "date",
-      required : true
+    dueDate: {
+      type: "date",
+      required: true
     },
 
-    tags : {
-      type : "string",
-      required : true
+    tags: {
+      type: "string",
+      required: true
     },
 
-    user : {
-      model : "user",
-      required : true
+    user: {
+      model: "user",
+      required: true
     }
+  },
+  validationMessages: { //hand for i18n & l10n
+    name: {
+      required: 'Name is required'
+    },
+    dueDate: {
+      required: 'due date is required'
+    },
+    tags: {
+      required: 'tags is required'
+    },
+    user: {
+      required: 'user is required'
+    }
+
   }
 };

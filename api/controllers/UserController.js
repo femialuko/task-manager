@@ -12,32 +12,34 @@ module.exports = {
         let allowedParams = ["email", "password"];
         let data = _.pick(req.body, allowedParams);
         UserService.create(data).spread(function (err, resp) {
+            console.log("Error is " + err);
+            console.log("response is " + resp);
             if (err)
                 return res.badRequest(err);
-            return res.ok({"message" : "User successfully created"});
+            return res.ok({ "message": "User successfully created" });
         }).catch(function (err) {
-            return res.serverError({"message" : "An error occured while trying to create the user"});
+            return res.serverError(err);
         })
     },
 
-    authenticate : function(req, res){
+    authenticate: function (req, res) {
         //why is passport authentication local...?
-        passport.authenticate('local', function(err, user, info){
-            if((err) || (!user)){
+        passport.authenticate('local', function (err, user, info) {
+            if ((err) || (!user)) {
                 return res.badRequest(info);
             }
-            var token = JwtService.issue({id : user.id});
+            var token = JwtService.issue({ id: user.id });
             var expiry = JwtService.getExpiry(token);
-            var response = {"access_token" : token, "expires_in" : expiry, "scope" : "jwt", "token_type" : "bearer"};
+            var response = { "access_token": token, "expires_in": expiry, "scope": "jwt", "token_type": "bearer" };
             return res.ok(response);
-            
+
         })(req, res);
     },
 
-    test : function(req, res){
+    test: function (req, res) {
         //why is passport authentication local...?
         return res.ok("Successful");
     }
-    
+
 };
 
