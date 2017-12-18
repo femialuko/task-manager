@@ -20,6 +20,12 @@ module.exports = function(req, res, next) {
                             return res.json(401, {'message' : 'Invalid token'});
                         }
                         return [null, user];
+                    }).spread(function(err, resp){
+                        if(err)
+                            next(err);
+                        req.id = decoded.id;
+                        next();
+                            
                     })
                     .catch(function (err){
                         return ResponseService.json(500, 'An internal server error has occured');

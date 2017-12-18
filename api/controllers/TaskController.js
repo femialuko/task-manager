@@ -9,12 +9,9 @@ var _ = require('lodash');
 var passport = require('passport');
 module.exports = {
     create: function (req, res) {
-        let allowedParams = ["name", "description", "dueDate", "tags", "user"];
+        let allowedParams = ["name", "description", "dueDate", "tags"];
         let data = _.pick(req.body, allowedParams);
-        if(!data.user){
-            return res.badRequest({ "message": "Please enter the user id" });
-        }
-        
+        data.user = req.id;
         TaskService.create(data).spread(function(error, resp){
             if(error){
                 return res.badRequest(error);
